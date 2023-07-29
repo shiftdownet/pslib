@@ -3,16 +3,16 @@
 using module ".\..\table\TableMerger.psm1"
 
 class QACTable : IMergeableTable {
-    [String]getPrimaryKey( $record ){
+    [String]getPrimaryKey( [PsCustomObject]$record ) {
         return $record.ID + $record.ErrorMessage
     }
 }
 
 class QACMerge:IMergeCondition {
-    [bool]canMerge( [PsCustomObject]$src, [PsCustomObject]$dst ){
+    [bool]canMerge( [PsCustomObject]$src, [PsCustomObject]$dst ) {
         return $dst.Comment -eq ""
     }
-    [void]merge([PsCustomObject]$src, [PsCustomObject]$dst){
+    [void]merge([PsCustomObject]$src, [PsCustomObject]$dst) {
         $dst.Comment = $src.Comment
     }
 }
